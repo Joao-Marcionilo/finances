@@ -10,4 +10,4 @@
      - requirements: requirements.txt
 
  mkdocs:
-   configuration: mkdocs.yml
+   configuration: ./finances/mkdocs.yml
