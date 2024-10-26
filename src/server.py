@@ -78,11 +78,11 @@ async def post_periodic_transactions(body: models.PeriodicTransactions) -> model
 @app.delete("/periodic/transactions/", status_code=204, tags=['Incomes and Expenses'])
 async def delete_periodic_transactions(table: Literal["Incomes", "Expenses"], title: str):
     """Delete a periodic transaction in the 'Incomes' or 'Expenses' tables"""
-    print(table)
     operator.delete_periodic_transactions(table, title)
 
 
 def run():
+    """Serve a local API to test the system"""
     global operator
 
     operator = system.Operator()

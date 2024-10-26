@@ -12,8 +12,8 @@ _intervals = [
     'month', 'year', 'yyyy', 'yy', 'quarter', 'qq', 'q', 'mm', 'm', 'dayofyear', 'dy', 'y', 'day', 'dd', 'd', 'week',
     'ww', 'wk', 'weekday', 'dw', 'w'
 ]
-_transaction_fields = "id, transactionValue, transactionDate, title, summary"
-_transaction_converted = ("id", "value", "time", "title", "summary")
+_transaction_fields = "id, transactionValue, subtraction, transactionDate, title, summary"
+_transaction_converted = ("id", "value", "subtraction", "time", "title", "summary")
 _periodic_fields = "title, transactionValue, await, awaitValue, nextDate, limit, summary"
 _periodic_converted = ("title", "value", "interval", "number", "next_date", "limit", "summary", "table")
 
@@ -57,13 +57,14 @@ class Operator:
         config_table("Registries", """
         id int PRIMARY KEY,
         transactionValue varchar(20) NOT NULL,
+        subtraction bit NOT NULL,
         transactionDate varchar(26),
         title varchar(100),
         summary varchar(200)
         """)
         self._sql("""
         IF NOT EXISTS (SELECT * FROM Registries)
-        INSERT INTO Registries(id, transactionValue) VALUES(0, '')
+        INSERT INTO Registries(id, transactionValue, subtraction) VALUES(0, '', 1)
         """)
         for each in ("Incomes", "Expenses"):
             config_table(each, """
@@ -99,18 +100,19 @@ class Operator:
             for registry in registries
         ]
 
-    def post_transaction(self, value:str, time="", title="", summary=""):
+    def post_transaction(self, value:str, subtraction:bool, time="", title="", summary=""):
         """
         Registry a new transaction
         :param value: Value of the transaction. Max length 20
+        :param subtraction: True define the value as a subtraction
         :param time: Time of the transaction. Max length 26
         :param title: Title of the transaction. Max length 100
         :param summary: Resume of the transaction. Max length 200
         """
         self._sql(f"""
         INSERT INTO Registries({_transaction_fields})
-        VALUES(1+(SELECT TOP 1 id FROM Registries ORDER BY id DESC), ?, ?, ?, ?)
-        """, value, time, title, summary)
+        VALUES(1+(SELECT TOP 1 id FROM Registries ORDER BY id DESC), ?, ?, ?, ?, ?)
+        """, value, subtraction, time, title, summary)
 
     def delete_transaction(self, identifier:int):
         """
@@ -130,10 +132,9 @@ class Operator:
             for table in ("Incomes", "Expenses"):
                 to_registry += self._sql(f"""
                 SELECT transactionValue, nextDate, title, summary, await, awaitValue, '{table}'
-                FROM {table} WHERE CONVERT(DATE, GETDATE()) > nextDate
+                FROM {table} WHERE CONVERT(DATE, GETDATE()) >= nextDate
                 """, fetch=1)
             if not to_registry: break
-            print(to_registry)
             for fields in to_registry:
                 self._sql(f"""
                 UPDATE {fields[6]}
@@ -144,7 +145,8 @@ class Operator:
                 WHERE title = ? AND limit > 0
                 DELETE FROM {fields[6]} WHERE limit = 0
                 """, fields[5], fields[2], fields[2])
-                self.post_transaction(fields[0], time=fields[1], title=fields[2], summary=fields[3])
+                subtraction = True if fields[6] == 'Expenses' else False
+                self.post_transaction(fields[0], subtraction, time=fields[1], title=fields[2], summary=fields[3])
             to_registry = []
             changed = True
         changed = "changed" if changed else "unchanged"
@@ -159,7 +161,6 @@ class Operator:
         for table in ("Incomes", "Expenses"):
             for transaction in self._sql(f"SELECT {_periodic_fields} FROM {table}", fetch=1):
                 result.append({x: y for x, y in zip(_periodic_converted, list(transaction)+[table])})
-        print(result)
         return result
 
     def post_periodic_transactions(

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "joao-marcionilo-finances"
+version = "0.0.2"
+description = "Module with CRUD using SQL Server and a FastAPI local server for testing it"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  { name="João Marcionilo", email="marcionilojob@gmail.com" },
+]
+dependencies = [
+    "pyodbc~=5.2.0",
+    "pydantic<2.0.0",
+    "fastapi~=0.115.2",
+    "uvicorn~=0.32.0"
+]

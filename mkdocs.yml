@@ -4,5 +4,5 @@ theme:
 
 nav:
   - Home: index.md
-  - Sistema: system.md
+  - System: system.md
   - Testing: server.md

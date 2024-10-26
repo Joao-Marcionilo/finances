@@ -14,6 +14,7 @@ class TransactionSend(BaseModel):
     time: Optional[constr(max_length=26)] = Field('', example='2024-09-30')
     title: Optional[constr(max_length=100)] = Field('', example='Salary')
     summary: Optional[constr(max_length=200)] = Field('', example='Monthly income')
+    subtraction: bool = Field(..., description='True means the value is a subtraction')
 
     class Config:
         orm_mode = True
@@ -33,9 +34,9 @@ class Changed(BaseModel):
 class PeriodicTransactions(BaseModel):
     table: Literal["Incomes", "Expenses"]
     title: constr(max_length=100) = Field(..., example='Salary')
-    value: constr(max_length=20) = Field(..., example='1999,99')
+    value: constr(max_length=20) = Field(..., example='999,99')
     interval: periods
-    number: int
+    number: conint(gt=0)
     next_date: date
     limit: Optional[int]
     summary: Optional[constr(max_length=200)] = Field(None, example='Monthly income')
