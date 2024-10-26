@@ -1,0 +1,36 @@
+Metadata-Version: 2.1
+Name: joao-marcionilo-finances
+Version: 0.0.2
+Summary: Module with CRUD using SQL Server and a FastAPI local server for testing it
+Author-email: João Marcionilo <marcionilojob@gmail.com>
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyodbc~=5.2.0
+Requires-Dist: pydantic<2.0.0
+Requires-Dist: fastapi~=0.115.2
+Requires-Dist: uvicorn~=0.32.0
+
+# Finances
+
+Module with CRUD using SQL Server and a FastAPI local server for testing it
+
+## Installation
+
+Terminal
+
+```
+pip install -i https://test.pypi.org/simple/ joao-marcionilo-finances==0.0.2
+```
+
+## Example
+
+You can test the API running the following code
+
+```
+from joao-marcionilo-finances import server
+
+server.run()
+```
+
+[Click here](http://127.0.0.1:8000/docs) while running the code to access the doc of the API
