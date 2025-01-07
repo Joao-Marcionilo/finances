@@ -1,14 +1,16 @@
 # Finances
 
-Module with CRUD using SQL Server and a FastAPI local server for testing it
+Package with CRUD using SQL Server and a FastAPI local server for testing it
 
 ## Installation
 
-Terminal
+You can install it using pip:
 
 ```
-pip install -i https://test.pypi.org/simple/ joao-marcionilo-finances==0.0.2
+py -m pip install joao_marcionilo_finances
 ```
 
-- [system documentation](/system)
-- [system test with fastapi](/server)
+## See also
+
+- [Quickstart](/Quickstart)
+- [Testing with local API](/Server)

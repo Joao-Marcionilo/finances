@@ -3,7 +3,7 @@
 You can test the system running the following code
 
 ```
-from joao-marcionilo-finances import server
+from joao_marcionilo_finances import server
 
 server.run()
 ```
