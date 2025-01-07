@@ -12,5 +12,5 @@ py -m pip install joao_marcionilo_finances
 
 ## See also
 
-- [Quickstart](/en/latest/quickstart)
-- [Testing with local API](/en/latest/server)
+- [Quickstart](quickstart)
+- [Testing with local API](server)
