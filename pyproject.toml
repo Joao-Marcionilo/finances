@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "joao_marcionilo_finances"
-version = "0.1.0"
-description = "Package with CRUD using SQL Server and a FastAPI local server for testing it"
+version = "0.1.1"
+description = "Package with CRUD operations using SQL Server and a FastAPI local server for testing it"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [

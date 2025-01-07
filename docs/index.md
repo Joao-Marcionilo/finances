@@ -1,6 +1,6 @@
 # Finances
 
-Package with CRUD using SQL Server and a FastAPI local server for testing it
+Package with CRUD operations using SQL Server and a FastAPI local server for testing it
 
 ## Installation
 

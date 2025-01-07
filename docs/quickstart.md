@@ -1,10 +1,14 @@
 # Quickstart
 
-Package with CRUD using SQL Server and a FastAPI local server for testing it
+Package with CRUD operations using SQL Server and a FastAPI local server for testing it
 
 ## Initialization
 
-**Class:** `Operator(credentials="DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;TRUSTED_CONNECTION=yes;", database="Finances")`
+**Class:** `Operator(credentials="
+DRIVER={ODBC Driver 17 for SQL Server};
+SERVER=localhost;
+TRUSTED_CONNECTION=yes;
+", database="Finances")`
 
 Initialize the operator to utilize its CRUD methods
 
